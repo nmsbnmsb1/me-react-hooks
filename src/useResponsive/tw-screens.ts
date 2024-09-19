@@ -1,3 +1,5 @@
+import { handleScreens } from '.';
+
 export const TwScreens = {
 	sm: 640,
 	md: 768,
@@ -5,3 +7,5 @@ export const TwScreens = {
 	xl: 1280,
 	'2xl': 1536,
 };
+
+export const TwScreenSortedList = handleScreens(TwScreens);

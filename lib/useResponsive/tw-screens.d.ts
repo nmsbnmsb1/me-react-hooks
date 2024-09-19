@@ -5,3 +5,4 @@ export declare const TwScreens: {
     xl: number;
     '2xl': number;
 };
+export declare const TwScreenSortedList: import(".").ScreensSortedList;
