@@ -1,7 +1,5 @@
 export * from './tw-screens';
-export type Screens = {
-    [breakpoint: string]: number;
-};
+export type Screens = Record<string, number>;
 export type ScreenConfig = {
     index: number;
     breakpoint: string;
@@ -10,9 +8,7 @@ export type ScreenConfig = {
 export type ScreensSortedList = ScreenConfig[];
 export type ScreenState = {
     current: ScreenConfig;
-} & {
-    [breakpoint: string]: ScreenConfig;
-} & {
+} & Record<string, ScreenConfig> & {
     match: (op: '<' | '<=' | '=' | '>=' | '>', breakpoint: string) => boolean;
 };
 export declare function handleScreens(ss: Screens): ScreensSortedList;

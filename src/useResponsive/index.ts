@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
+
 import { TwScreenSortedList } from './tw-screens';
 //
 export * from './tw-screens';
 // Types
-export type Screens = { [breakpoint: string]: number };
+export type Screens = Record<string, number>;
 export type ScreenConfig = { index: number; breakpoint: string; maxWidth: number };
 export type ScreensSortedList = ScreenConfig[];
-export type ScreenState = { current: ScreenConfig } & { [breakpoint: string]: ScreenConfig } & {
-	match: (op: '<' | '<=' | '=' | '>=' | '>', breakpoint: string) => boolean;
-};
-//把BreakPoints配置转换成ScreensSortedList
+export type ScreenState = { current: ScreenConfig } & Record<string, ScreenConfig> & {
+		match: (op: '<' | '<=' | '=' | '>=' | '>', breakpoint: string) => boolean;
+	};
+// 把BreakPoints配置转换成ScreensSortedList
 export function handleScreens(ss: Screens): ScreensSortedList {
 	return Object.entries(ss)
 		.sort(([, a], [, b]) => a - b)
@@ -30,8 +31,9 @@ export const useResponsive = (ss: Screens | ScreensSortedList = TwScreenSortedLi
 		//
 		let nstate: ScreenState = {} as any;
 		for (let c of sorted) {
+			// 记录断点
 			nstate[c.breakpoint] = c;
-			//
+			// 计算当前所在的断点
 			if (!nstate.current) {
 				let inRange = clientWidth <= c.maxWidth;
 				if (inRange) {
@@ -39,9 +41,12 @@ export const useResponsive = (ss: Screens | ScreensSortedList = TwScreenSortedLi
 				}
 			}
 		}
+		if (!nstate.current) nstate.current = sorted.at(-1)!;
+		//
 		nstate.match = (op: string, bp: string) => {
 			let currentIndex = nstate.current.index;
-			let targetIndex = nstate[bp].index;
+			let targetIndex = nstate[bp]?.index;
+			if (targetIndex === undefined) return false;
 			if (op === '<') return currentIndex < targetIndex;
 			if (op === '<=') return currentIndex <= targetIndex;
 			if (op === '=') return currentIndex === targetIndex;
