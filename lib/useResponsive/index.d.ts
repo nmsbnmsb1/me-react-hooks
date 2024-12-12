@@ -1,10 +1,10 @@
 export * from './tw-screens';
 export type Screens = Record<string, number>;
-export type ScreenConfig = {
+export interface ScreenConfig {
     index: number;
     breakpoint: string;
     maxWidth: number;
-};
+}
 export type ScreensSortedList = ScreenConfig[];
 export type ScreenState = {
     current: ScreenConfig;

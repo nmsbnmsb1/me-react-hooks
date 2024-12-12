@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useMemo, useCallback, useEffect, useState } from 'react';
 
 import { TwScreenSortedList } from './tw-screens';
 //
 export * from './tw-screens';
 // Types
 export type Screens = Record<string, number>;
-export type ScreenConfig = { index: number; breakpoint: string; maxWidth: number };
+export interface ScreenConfig  { index: number; breakpoint: string; maxWidth: number };
 export type ScreensSortedList = ScreenConfig[];
 export type ScreenState = { current: ScreenConfig } & Record<string, ScreenConfig> & {
 		match: (op: '<' | '<=' | '=' | '>=' | '>', breakpoint: string) => boolean;
@@ -19,7 +19,7 @@ export function handleScreens(ss: Screens): ScreensSortedList {
 // Hook
 export const useResponsive = (ss: Screens | ScreensSortedList = TwScreenSortedList) => {
 	// 对传入的pts根据数据从小到大进行排序
-	let sorted = !Array.isArray(ss) ? handleScreens(ss) : ss;
+	let sorted = useMemo(() => (!Array.isArray(ss) ? handleScreens(ss) : ss), [ss]);
 	let getBreakpointState = useCallback(() => {
 		let clientWidth = 0; // SSR
 		if (document) {
