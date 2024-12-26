@@ -1,11 +1,15 @@
-import { useMemo, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { TwScreenSortedList } from './tw-screens';
 //
 export * from './tw-screens';
 // Types
 export type Screens = Record<string, number>;
-export interface ScreenConfig  { index: number; breakpoint: string; maxWidth: number };
+export interface ScreenConfig {
+	index: number;
+	breakpoint: string;
+	maxWidth: number;
+}
 export type ScreensSortedList = ScreenConfig[];
 export type ScreenState = { current: ScreenConfig } & Record<string, ScreenConfig> & {
 		match: (op: '<' | '<=' | '=' | '>=' | '>', breakpoint: string) => boolean;
@@ -58,6 +62,7 @@ export const useResponsive = (ss: Screens | ScreensSortedList = TwScreenSortedLi
 	}, [sorted]);
 	//
 	let [state, setState] = useState<ScreenState>(() => getBreakpointState());
+	//biome-ignore lint/correctness/useExhaustiveDependencies:
 	useEffect(() => {
 		let onResize = () => {
 			const now = getBreakpointState();
