@@ -1,6 +1,6 @@
 {
 	"name": "me-react-hooks",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"main": "lib/index.js",
 	"scripts": {
 		"build": "tsc"
@@ -8,9 +8,9 @@
 	"dependencies": {},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@types/react": "^19.0.8",
-		"@types/node": "^22.13.1",
+		"@types/react": "^19.0.11",
+		"@types/node": "^22.13.10",
 		"react": "^19.0.0",
-		"typescript": "^5.7.3"
+		"typescript": "^5.8.2"
 	}
 }
